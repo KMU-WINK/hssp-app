@@ -4,6 +4,7 @@ import 'package:hsspapp/providers/app_config.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/providers/get_data.dart';
 import 'package:hsspapp/screens/login_page.dart';
+import 'package:hsspapp/screens/main_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -47,8 +48,10 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'HSSP',
-        home: LoginPage(),
+//        home: LoginPage(),
+        home: MainPage(),
       ),
     );
   }

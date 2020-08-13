@@ -13,7 +13,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  int _currentedIndex = 0;
 
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,16 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ),
-
+            FadeAnimation(1.3, MenuWidget()),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "콘텐츠가 들어갈 겁니다. 콘텐츠가 들어갈 겁니다. 콘텐츠가 들어갈",
+            ),
+            SizedBox(
+              height: 25,
+            ),
 
           ],
         ),

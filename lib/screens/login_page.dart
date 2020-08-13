@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hsspapp/providers/auth.dart';
-import 'package:hsspapp/screens/main_page.dart';
+import 'package:hsspapp/screens/test_page.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       if (isLoggedIn) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MainPage()),
+          MaterialPageRoute(builder: (context) => TestPage()),
         );
       } else {
         setState(() => _checkingLoggedIn = false);
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() => _submitting = false);
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
+                      MaterialPageRoute(builder: (context) => TestPage()),
                     );
                   } catch (e) {
                     print(e);

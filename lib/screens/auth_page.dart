@@ -5,6 +5,7 @@ import 'package:hsspapp/components/custom_button_animation.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/screens/login_page.dart';
 import 'package:hsspapp/screens/main_page.dart';
+import 'package:hsspapp/screens/sign_up_page.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _AuthPageState extends State<AuthPage> {
       final bool isLoggedIn = await Provider.of<AuthProvider>(
         context,
         listen: false,
-      ).tyrAutoLogin();
+      ).tryAutoLogin();
 
       if (isLoggedIn) {
         Navigator.push(
@@ -61,6 +62,7 @@ class _AuthPageState extends State<AuthPage> {
 //        ),
 //      );
 //    }
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -119,6 +121,7 @@ class _AuthPageState extends State<AuthPage> {
                         background: Colors.transparent,
                         fontColor: Colors.white,
                         borderColor: Colors.white,
+                        child: SignUpPage(),
                       ),
                     ),
                     SizedBox(

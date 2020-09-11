@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
       onTap: () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MainPage()),
+          MaterialPageRoute(builder: (context) => child),
         );
       },
       child: Container(

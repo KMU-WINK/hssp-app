@@ -1,5 +1,6 @@
 var drawer = 'assets/images/svg/menu.svg';
 var farmer = 'assets/images/farmer.png';
+var mainCharacter = 'assets/images/main_character.png';
 
 /*바텀 네비게이션 바*/
 var selCalc = 'assets/images/calculator.png';
@@ -19,3 +20,4 @@ var swiper3 = 'assets/images/swiper3.png';
 /*Login Page*/
 var army = 'assets/images/login_army.png';
 var army2 = 'assets/images/login_army2.jpg';
+var army3 = 'assets/images/login_army3.png';

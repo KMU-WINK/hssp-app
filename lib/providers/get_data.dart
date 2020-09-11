@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'app_config.dart';
 
-class GetDataProvider with ChangeNotifier {
+class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
   String _message;
   String get message => _message;
 

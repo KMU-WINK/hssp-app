@@ -8,10 +8,8 @@ import 'package:hsspapp/screens/main_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  const String wPort = '3010';
-  final String baseUrl =
-      Platform.isAndroid ? 'http://10.0.2.2:$wPort' : 'http://localhost:$wPort';
-  final String dataUrl = '$baseUrl/prod';
+  final String baseUrl = 'https://hssp.kmuwink.com';
+  final String dataUrl = '$baseUrl/api';
 
   final appConfig =
       AppConfig(baseUrl: baseUrl, dataUrl: dataUrl);

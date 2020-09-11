@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hsspapp/models/food.dart';
+import 'package:hsspapp/services/api_response.dart';
 import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 import 'package:hsspapp/shared/style_constants.dart';
@@ -16,17 +17,6 @@ class MenuWidget extends StatefulWidget {
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getData();
-  }
-
-  getData() async{
-    Food food = await Provider.of<GetDataProvider>(context, listen: false).getFood();
-  }
-
   @override
   Widget build(BuildContext context) {
     ScrollController _controller = ScrollController(initialScrollOffset: 353.0 * 1);

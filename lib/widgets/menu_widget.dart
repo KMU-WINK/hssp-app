@@ -6,7 +6,6 @@ import 'package:hsspapp/shared/image_constants.dart';
 import 'package:hsspapp/shared/style_constants.dart';
 import 'package:provider/provider.dart';
 
-
 class MenuWidget extends StatefulWidget {
   const MenuWidget({
     Key key,
@@ -17,12 +16,34 @@ class MenuWidget extends StatefulWidget {
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
+  APIResponse<Food> _apiResponse;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    getFood();
+    super.initState();
+  }
+
+  getFood() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    _apiResponse =
+        await Provider.of<GetDataProvider>(context, listen: false).getFood();
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    ScrollController _controller = ScrollController(initialScrollOffset: 353.0 * 1);
+    ScrollController _controller =
+        ScrollController(initialScrollOffset: 353.0 * 1);
     return Container(
       height: 205,
-
       child: ListView.builder(
         controller: _controller,
         scrollDirection: Axis.horizontal,
@@ -46,55 +67,53 @@ class _MenuWidgetState extends State<MenuWidget> {
                 ]),
             child: Padding(
               padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'd',
-                        style: TextStyle(
-                          color: Colors.greenAccent[700],
-                          letterSpacing: 3.0,
-                          fontFamily: 'NotoSans-Bold',
-                          fontSize: 25.0,
+              child: _isLoading
+                  ? CircularProgressIndicator()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              _apiResponse.data.meals[index].type == 'breakfast'
+                                  ? '아침'
+                                  : _apiResponse.data.meals[index].type ==
+                                          'lunch'
+                                      ? '점심'
+                                      : '저녁',
+                              style: TextStyle(
+                                color: Colors.greenAccent[700],
+                                letterSpacing: 3.0,
+                                fontFamily: 'NotoSans-Bold',
+                                fontSize: 25.0,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '${_apiResponse.data.meals[index].menu[index].kcal.toString()} Kcal',
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontFamily: 'NotoSans-Regular',
+                                fontSize: 17.0,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Spacer(),
-                      Text(
-                        'd',
-                        //'${menus[index].calorie} Kcal',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontFamily: 'NotoSans-Regular',
-                          fontSize: 17.0,
+                        Text(
+                          '${_apiResponse.data.meals[index].menu[index].name}',
+                          style: menuText,
                         ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    'd',
-                    style: menuText,
-                  ),
-                  Text(
-                    'd',
-                    style: menuText,
-                  ),
-                  Text(
-                    'd',
-                    style: menuText,
-                  ),
-                  Text(
-                    'd',
-                    style: menuText,
-                  ),
-                  Text(
-                    'd',
-                    style: menuText,
-                  ),
-                ],
-              ),
+                        Text(
+                          '단백질 : ${_apiResponse.data.meals[index].menu[index].protein}',
+                          style: menuText,
+                        ),
+                        Text(
+                          '탄수화물 : ${_apiResponse.data.meals[index].menu[index].carbohydrate}',
+                          style: menuText,
+                        ),
+                      ],
+                    ),
             ),
           );
         },

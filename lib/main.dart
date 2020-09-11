@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hsspapp/providers/app_config.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/providers/get_data.dart';
-import 'package:hsspapp/screens/login_page.dart';
+import 'package:hsspapp/screens/auth_page.dart';
 import 'package:hsspapp/screens/main_page.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ void main() {
   final String dataUrl = '$baseUrl/prod';
 
   final appConfig =
-      AppConfig(baseUrl: baseUrl, dataUrl: dataUrl, buildFlavor: 'prod');
+      AppConfig(baseUrl: baseUrl, dataUrl: dataUrl);
 
   runApp(MyApp(appConfig));
 }
@@ -50,8 +50,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'HSSP',
-//        home: LoginPage(),
-        home: MainPage(),
+        home: AuthPage(),
+        //home: MainPage(),
       ),
     );
   }

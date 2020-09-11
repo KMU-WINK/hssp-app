@@ -52,10 +52,6 @@ class MyApp extends StatelessWidget {
         title: 'HSSP',
         home: AuthPage(),
         //home: MainPage(),
-        routes: {
-          AuthPage.routeName: (context) => AuthPage(),
-          MainPage.routeName: (context) => MainPage(),
-        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hsspapp/screens/main_page.dart';
 
 class CustomButton extends StatelessWidget {
   final double width;
@@ -7,21 +8,28 @@ class CustomButton extends StatelessWidget {
   final Color borderColor;
   final Color fontColor;
   final Function onTap;
+  final Widget child;
 
-  const CustomButton(
-      {Key key,
-        this.width,
-        this.label,
-        this.background,
-        this.borderColor,
-        this.fontColor,
-        this.onTap})
-      : super(key: key);
+  const CustomButton({
+    Key key,
+    this.width,
+    this.label,
+    this.background,
+    this.borderColor,
+    this.fontColor,
+    this.onTap,
+    this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainPage()),
+        );
+      },
       child: Container(
         height: width * 0.2,
         width: double.infinity,
@@ -29,16 +37,12 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: background,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-                color: borderColor,
-                width: 1
-            )
-        ),
-        child: Text(label, style: TextStyle(
-            color: fontColor,
-            fontSize: width * 0.055,
-            fontFamily: 'NotoSans-Bold'
-        )),
+            border: Border.all(color: borderColor, width: 1)),
+        child: Text(label,
+            style: TextStyle(
+                color: fontColor,
+                fontSize: width * 0.055,
+                fontFamily: 'NotoSans-Bold')),
       ),
     );
   }

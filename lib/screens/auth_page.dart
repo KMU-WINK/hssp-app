@@ -9,7 +9,6 @@ import 'package:hsspapp/shared/image_constants.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
-  static const String routeName = '/auth';
 
   @override
   _AuthPageState createState() => _AuthPageState();

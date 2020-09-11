@@ -8,7 +8,6 @@ class CustomButtonAnimation extends StatefulWidget {
   final Color background;
   final Color borderColor;
   final Color fontColor;
-  final Function onTap;
   final Widget child;
 
   const CustomButtonAnimation(
@@ -18,7 +17,6 @@ class CustomButtonAnimation extends StatefulWidget {
         this.background,
         this.borderColor,
         this.fontColor,
-        this.onTap,
         this.child})
       : super(key: key);
 

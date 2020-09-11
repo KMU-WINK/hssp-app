@@ -11,7 +11,6 @@ import 'package:hsspapp/animation/fade_animation.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
-  static const String routeName = '/main';
 
   @override
   _MainPageState createState() => _MainPageState();

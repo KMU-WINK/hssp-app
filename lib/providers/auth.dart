@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'app_config.dart';
 
 class AuthProvider with ChangeNotifier {
-  String _token;
+  String _token; //토큰 받을 변수
 
   String get token {
     return _token != null ? _token : null;
@@ -17,7 +17,7 @@ class AuthProvider with ChangeNotifier {
   AppConfig _appConfig;
   AppConfig get appConfig => _appConfig;
 
-  set appConfig(AppConfig appConfigVal) {
+  set appConfig(AppConfig appConfigVal) { //proxyprovider 생성될 때
     if (_appConfig != appConfigVal) {
       _appConfig = appConfigVal;
       notifyListeners();
@@ -49,7 +49,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> tyrAutoLogin() async {
+  Future<bool> tryAutoLogin() async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       if (!prefs.containsKey('jwtToken')) {

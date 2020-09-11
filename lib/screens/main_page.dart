@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:hsspapp/Shared/image_constants.dart';
 import 'package:hsspapp/models/swiper_model.dart';
 import 'package:hsspapp/providers/auth.dart';
+import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/screens/auth_page.dart';
 import 'package:hsspapp/widgets/bottom_navigation.dart';
 import 'package:hsspapp/widgets/menu_widget.dart';

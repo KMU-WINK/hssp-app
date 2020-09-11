@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hsspapp/shared/color_constants.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ButtonLoginAnimation extends StatefulWidget {
-
+  final double width;
   final String label;
-  final Color background;
   final Color borderColor;
   final Color fontColor;
   final Function onTap;
   final Widget child;
 
-  const ButtonLoginAnimation({Key key, this.label, this.background, this.borderColor, this.fontColor, this.onTap, this.child}) : super(key: key);
+  const ButtonLoginAnimation(
+      {Key key,
+      this.width,
+      this.label,
+      this.borderColor,
+      this.fontColor,
+      this.onTap,
+      this.child})
+      : super(key: key);
 
   @override
   _ButtonLoginAnimationState createState() => _ButtonLoginAnimationState();
@@ -18,7 +26,6 @@ class ButtonLoginAnimation extends StatefulWidget {
 
 class _ButtonLoginAnimationState extends State<ButtonLoginAnimation>
     with TickerProviderStateMixin {
-
   AnimationController _positionController;
   Animation<double> _positionAnimation;
 
@@ -32,92 +39,55 @@ class _ButtonLoginAnimationState extends State<ButtonLoginAnimation>
   void initState() {
     super.initState();
 
-    _positionController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 800)
-    );
+    _positionController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
 
-    _positionAnimation = Tween<double>(begin: 10.0, end: 255.0)
-        .animate(_positionController)..addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        setState(() {
-          _isIconHide = true;
-        });
-        _scaleController.forward();
-      }
-    });
-
-    _scaleController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: 900)
-    );
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 32)
-        .animate(_scaleController)..addStatusListener((status){
-      if(status == AnimationStatus.completed){
-        Navigator.pushReplacement(context, PageTransition(
-            type: PageTransitionType.fade,
-            child: widget.child
-        ));
-      }
-    });
-
+    _positionAnimation =
+        Tween<double>(begin: 10.0, end: 255.0).animate(_positionController)
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              setState(() {
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade, child: widget.child));
+              });
+            }
+          });
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         setState(() {
           _isLogin = true;
         });
         _positionController.forward();
       },
       child: Container(
-        height: 63,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: widget.background,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: !_isLogin ? Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(widget.label, style: TextStyle(
-                color: widget.fontColor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-            )),
-            SizedBox(width: 10),
-            Icon(Icons.arrow_forward, color: widget.fontColor,size: 32)
-          ],
-        ) : Stack(
-          children: <Widget>[
-            AnimatedBuilder(
-              animation: _positionController,
-              builder: (context, child) => Positioned(
-                left: _positionAnimation.value,
-                top: 5,
-                child: AnimatedBuilder(
-                  animation: _scaleController,
-                  builder: (context,build) => Transform.scale(
-                      scale: _scaleAnimation.value,
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: widget.borderColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: !_isIconHide ? Icon(Icons.arrow_forward, color: widget.fontColor,size: 32) : Container(),
-                      )),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+          height: widget.width * 0.15,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [mainColorEnd, mainColorStart],
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(widget.label,
+                  style: TextStyle(
+                    color: widget.fontColor,
+                    fontSize: widget.width * 0.05,
+                    fontFamily: 'NotoSans-Bold',
+                  )),
+            ],
+          )),
     );
   }
 }

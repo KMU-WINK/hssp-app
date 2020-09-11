@@ -15,3 +15,7 @@ var setting = 'assets/images/setting_w.png';
 var swiper1 = 'assets/images/swiper1.jpg';
 var swiper2 = 'assets/images/swiper2.png';
 var swiper3 = 'assets/images/swiper3.png';
+
+/*Login Page*/
+var army = 'assets/images/login_army.png';
+var army2 = 'assets/images/login_army2.jpg';

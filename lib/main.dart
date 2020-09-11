@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hsspapp/providers/app_config.dart';
 import 'package:hsspapp/providers/auth.dart';
-import 'package:hsspapp/providers/get_data.dart';
+import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/screens/auth_page.dart';
-import 'package:hsspapp/screens/main_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {

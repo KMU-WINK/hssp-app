@@ -1,15 +1,32 @@
 class Food {
+  final List<Meal> meals;
+
+  Food({this.meals});
+
+  factory Food.fromJson(List<dynamic> parsedJson) {
+    List<Meal> photos = new List<Meal>();
+    photos = parsedJson.map((i) => Meal.fromJson(i)).toList();
+
+    return Food(
+        meals: photos
+    );
+  }
+}
+
+class Meal {
   String type;
   List<Menu> menu;
 
-  Food({this.type, this.menu});
+  Meal({this.type, this.menu});
 
-  Food.fromJson(Map<String, dynamic> json) {
-    this.type = json['type'];
-    this.menu = (json['menu'] as List)
-        ?.map((e) {
-      return e == null ? null : Menu.fromJson(e as Map<String, dynamic>);
-    })?.toList();
+  factory Meal.fromJson(Map<String, dynamic> json) {
+    return Meal(
+        type: json['type'],
+        menu: (json['menu'] as List)
+            ?.map((e) {
+          return e == null ? null : Menu.fromJson(e as Map<String, dynamic>);
+        })?.toList()
+    );
   }
 }
 
@@ -21,10 +38,12 @@ class Menu {
 
   Menu({this.name, this.kcal, this.protein, this.carbohydrate});
 
-  Menu.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    kcal = json['kcal'];
-    protein = json['protein'];
-    carbohydrate = json['carbohydrate'];
+  factory Menu.fromJson(Map<String, dynamic> json) {
+    return Menu(
+        name : json['name'],
+        kcal : json['kcal'],
+        protein : json['protein'],
+        carbohydrate : json['carbohydrate'],
+    );
   }
 }

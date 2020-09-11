@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:hsspapp/models/food.dart';
+import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 import 'package:hsspapp/shared/style_constants.dart';
-import 'package:hsspapp/models/menu_model.dart';
+import 'package:provider/provider.dart';
 
-class MenuWidget extends StatelessWidget {
+
+class MenuWidget extends StatefulWidget {
   const MenuWidget({
     Key key,
   }) : super(key: key);
+
+  @override
+  _MenuWidgetState createState() => _MenuWidgetState();
+}
+
+class _MenuWidgetState extends State<MenuWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async{
+    Food food = await Provider.of<GetDataProvider>(context, listen: false).getFood();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +37,7 @@ class MenuWidget extends StatelessWidget {
         controller: _controller,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(left: 16, right: 6, top: 10, bottom: 10),
-        itemCount: menus.length,
+        itemCount: 3,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.only(right: 8),
@@ -44,7 +63,7 @@ class MenuWidget extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        menus[index].meal,
+                        'd',
                         style: TextStyle(
                           color: Colors.greenAccent[700],
                           letterSpacing: 3.0,
@@ -54,7 +73,8 @@ class MenuWidget extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        '${menus[index].calorie} Kcal',
+                        'd',
+                        //'${menus[index].calorie} Kcal',
                         style: TextStyle(
                           color: Colors.grey[800],
                           fontFamily: 'NotoSans-Regular',
@@ -64,23 +84,23 @@ class MenuWidget extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    menus[index].rice,
+                    'd',
                     style: menuText,
                   ),
                   Text(
-                    menus[index].stew,
+                    'd',
                     style: menuText,
                   ),
                   Text(
-                    menus[index].mainSideDish,
+                    'd',
                     style: menuText,
                   ),
                   Text(
-                    menus[index].subSideDish,
+                    'd',
                     style: menuText,
                   ),
                   Text(
-                    menus[index].dessert,
+                    'd',
                     style: menuText,
                   ),
                 ],

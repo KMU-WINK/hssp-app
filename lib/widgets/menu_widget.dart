@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:hsspapp/models/food.dart';
 import 'package:hsspapp/services/api_response.dart';
@@ -20,44 +21,44 @@ class _MenuWidgetState extends State<MenuWidget> {
   Widget build(BuildContext context) {
     ScrollController _controller =
         ScrollController(initialScrollOffset: 353.0 * 1);
-    return Container(
-      height: 205,
-      child: ListView.builder(
-        controller: _controller,
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(left: 16, right: 6, top: 10, bottom: 10),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.only(right: 8),
-            height: 205,
-            width: 344,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1.5,
-                    blurRadius: 5,
-                    offset: Offset(1, 2),
-                  )
-                ]),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: FutureBuilder(
-                future: Provider.of<GetDataProvider>(context, listen: false)
-                    .getFood(),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    default:
-                      final foods = snapshot.data;
-                      return Column(
+    return FutureBuilder(
+      future: Provider.of<GetDataProvider>(context, listen: false).getFood(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            final foods = snapshot.data;
+            return Container(
+              height: 205,
+              child: ListView.builder(
+                controller: _controller,
+                scrollDirection: Axis.horizontal,
+                padding:
+                    EdgeInsets.only(left: 16, right: 6, top: 10, bottom: 10),
+                itemCount: foods.data.meals.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(right: 8),
+                    height: 205,
+                    width: 344,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1.5,
+                            blurRadius: 5,
+                            offset: Offset(1, 2),
+                          )
+                        ]),
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -100,14 +101,14 @@ class _MenuWidgetState extends State<MenuWidget> {
                             style: menuText,
                           ),
                         ],
-                      );
-                  }
+                      ),
+                    ),
+                  );
                 },
               ),
-            ),
-          );
-        },
-      ),
+            );
+        }
+      },
     );
   }
 }

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hsspapp/animation/fade_animation.dart';
 import 'package:hsspapp/components/circle_image.dart';
-import 'package:hsspapp/components/custom_button_login.dart';
-import 'package:hsspapp/components/custom_textfield.dart';
-import 'package:hsspapp/screens/main_page.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 

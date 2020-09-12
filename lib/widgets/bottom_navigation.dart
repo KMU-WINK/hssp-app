@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hsspapp/screens/auth_page.dart';
+import 'package:hsspapp/screens/login_page.dart';
+import 'package:hsspapp/screens/main_page.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 
@@ -9,6 +12,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
+
 
   void _onItemTapped(int index) {
     setState(() {

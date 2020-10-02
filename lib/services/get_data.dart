@@ -33,7 +33,7 @@ class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
   }
 
   Future<APIResponse<Food>> getFood(){
-    return http.get('${appConfig.dataUrl}/food', headers: {'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDY1MzgxNzg4IiwiaWF0IjoxNTk5ODQ0NTEwLCJleHAiOjE2MDA0NDkzMTB9.Jn1XYXGhcBLWMaylkYPKeTckPk3DnJJ03BLrVj-Do3w'}).then((data){
+    return http.get('${appConfig.dataUrl}/food', headers: {'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwiaWF0IjoxNjAxNjE5ODU2LCJleHAiOjE2MDIyMjQ2NTZ9.1ayaCC62z6D-tPBqhqwnWJkwsescxWGctD1UbjBrfSU'}).then((data){
       if(data.statusCode == 200){
         final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
         print(jsonData);

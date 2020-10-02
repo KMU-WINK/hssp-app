@@ -3,11 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/screens/auth_page.dart';
 import 'package:hsspapp/screens/calc_page.dart';
+import 'package:hsspapp/screens/px_page.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
-import 'package:hsspapp/widgets/exit_widget.dart';
-import 'package:hsspapp/widgets/menu_widget.dart';
-import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -16,12 +14,12 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  static int _selectedIndex = 0;
+  static int _selectedIndex = 2;
 
   static List<Widget> _screens = <Widget>[
     CalcPage(),
     Container(color: Colors.red),
-    Container(color: Colors.green),
+    PxPage(),
     Container(color: Colors.blue),
   ];
 
@@ -79,43 +77,5 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  Padding buildTodayMeals() {
-    return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "오늘의 식단",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'NotoSans-Bold',
-                    fontSize: 30.0,
-                  ),
-                ),
-                MaterialButton(
-                  minWidth: 15,
-                  height: 30,
-                  onPressed: () {},
-                  color: settingColor,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Text(
-                    '식단관리',
-                    style: TextStyle(
-                      letterSpacing: 3,
-                      color: Colors.white,
-                      fontFamily: 'NotoSans-Bold',
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
   }
 }

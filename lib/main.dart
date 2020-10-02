@@ -52,3 +52,20 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+//import 'dart:io';
+//
+//void main()
+//{
+//  var firstShortDate = DateTime(2017, 1, 3); // 군복무 단축 법적 효력 발생 날짜
+//  var enlistmentDate = DateTime(2018, 1, 30); // 2018-01-30 김태훈 입대일
+//
+//  print();
+//  var shortenDate = 1 + (enlistmentDate.difference(firstShortDate).inDays) / 14; // 단축일 수 (1 + 입대일 - 군복무 단축 법적 효력 발생 날짜 / 14) 14 -> 2주
+//
+//  var originDischargeDate = enlistmentDate.add(new Duration(days: 600)); // 기존 전역일
+//
+////   var realDischargeDate = originDischargeDate - (shortenDate * 24 * 60 * 60);
+//
+////   print(realDischargeDate);
+//}

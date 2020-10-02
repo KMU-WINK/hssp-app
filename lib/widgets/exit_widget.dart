@@ -5,6 +5,7 @@ import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
 import 'package:hsspapp/shared/style_constants.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ExitWidget extends StatefulWidget {
@@ -46,23 +47,24 @@ class _ExitWidgetState extends State<ExitWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  buildExitDate(),
-                  buildExitDate(),
-                  buildExitDate(),
-                  Text("일", style: TextStyle(
-                    fontFamily: 'NotoSans-Bold'
-                  ),),
+                  buildExitDate(date: 4),
+                  buildExitDate(date: 5),
+                  buildExitDate(date: 3),
+                  Text(
+                    "일",
+                    style: TextStyle(fontFamily: 'NotoSans-Bold'),
+                  ),
                 ],
               ),
-
-              SizedBox(height: 30,),
-
+              SizedBox(
+                height: 30,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  buildExitTime(),
-                  buildExitTime(),
+                  buildExitTime(padding: 8, date: 1),
+                  buildExitTime(padding: 0, date: 7),
                   Text(
                     ':',
                     style: TextStyle(
@@ -70,12 +72,56 @@ class _ExitWidgetState extends State<ExitWidget> {
                       color: mainColorStart,
                     ),
                   ),
-
-                  buildExitTime(),
-                  buildExitTime(),
-
+                  buildExitTime(padding: 8, date: 5),
+                  buildExitTime(padding: 0, date: 5),
+                  buildExitSecond(),
                 ],
               ),
+              Center(
+                child: Text(
+                  '(식사집합 1547회)',
+                  style: TextStyle(
+                      fontFamily: 'NotoSans-Regular',
+                      fontSize: 20,
+                      letterSpacing: 3.0),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: LinearPercentIndicator(
+                  width: 280,
+                  animation: true,
+                  lineHeight: 20.0,
+                  animationDuration: 2000,
+                  percent: 0.33,
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: mainColorEnd,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  '33.8%',
+                  style: TextStyle(
+                      fontFamily: 'NotoSans-Medium',
+                      fontSize: 15,
+                      letterSpacing: 3.0),
+                ),
+              ),
+
+              Text(
+                "남은 출타",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'NotoSans-Bold',
+                  fontSize: 25.0,
+                  letterSpacing: 3.0,
+                ),
+              ),
+
+
             ],
           ),
         ),
@@ -83,10 +129,7 @@ class _ExitWidgetState extends State<ExitWidget> {
     );
   }
 
-
-
-
-  Container buildExitDate() {
+  Container buildExitDate({int date}) {
     return Container(
       margin: EdgeInsets.only(right: 8),
       height: 80,
@@ -102,24 +145,26 @@ class _ExitWidgetState extends State<ExitWidget> {
               offset: Offset(1, 2),
             )
           ]),
-      child: Text('1',
+      child: Text(
+        date.toString(),
         textAlign: TextAlign.center,
         style: TextStyle(
-        fontSize: 70,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),),
+          fontSize: 70,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 
-  Container buildExitTime() {
+  Container buildExitTime({double padding, int date}) {
     return Container(
-      margin: EdgeInsets.only(right: 8),
-      height: 50,
-      width: 40,
+      margin: EdgeInsets.only(right: padding),
+      height: 40,
+      width: 30,
       decoration: BoxDecoration(
           color: exitTimeButton,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -128,13 +173,45 @@ class _ExitWidgetState extends State<ExitWidget> {
               offset: Offset(1, 2),
             )
           ]),
-      child: Text('1',
+      child: Text(
+        date.toString(),
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 40,
-          fontWeight: FontWeight.bold,
+          fontSize: 35,
+          fontWeight: FontWeight.normal,
           color: Colors.white,
-        ),),
+        ),
+      ),
+    );
+  }
+
+  Container buildExitSecond() {
+    return Container(
+      margin: EdgeInsets.only(left: 8),
+      height: 40,
+      width: 120,
+      decoration: BoxDecoration(
+          color: exitTimeButton,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1.5,
+              blurRadius: 5,
+              offset: Offset(1, 2),
+            )
+          ]),
+      child: Center(
+        child: Text(
+          '58.55356s',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }

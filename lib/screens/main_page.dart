@@ -1,17 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:hsspapp/models/swiper_model.dart';
 import 'package:hsspapp/providers/auth.dart';
-import 'package:hsspapp/services/get_data.dart';
 import 'package:hsspapp/screens/auth_page.dart';
+import 'package:hsspapp/screens/calc_page.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
-import 'package:hsspapp/widgets/bottom_navigation.dart';
 import 'package:hsspapp/widgets/exit_widget.dart';
 import 'package:hsspapp/widgets/menu_widget.dart';
-import 'package:hsspapp/animation/fade_animation.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
@@ -20,207 +15,70 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentedIndex = 0;
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
-    for (var i = 0; i < list.length; i++) {
-      result.add(handler(i, list[i]));
-    }
-    return result;
-  }
+  static int _selectedIndex = 0;
+
+  static List<Widget> _screens = <Widget>[
+    CalcPage(),
+    Container(color: Colors.red),
+    Container(color: Colors.green),
+    Container(color: Colors.blue),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigation(),
-      body: Container(
-        margin: EdgeInsets.only(top: 8),
-        child: ListView(
-          //physics: ClampingScrollPhysics(),
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 16, right: 16, top: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () async {
-                      await Provider.of<AuthProvider>(
-                        context,
-                        listen: false,
-                      ).logout();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => AuthPage()),
-                      );
-                    },
-                    child: SvgPicture.asset(
-                      drawer,
-                      height: 25.0,
-                      width: 20.0,
-                    ),
-                  ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage(mainCharacter),
-                    radius: 25.0,
-                    backgroundColor: Colors.white,
-                  ),
-                ],
-              ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: bottomColor, boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 15,
+            offset: Offset(0, 5),
+          )
+        ]),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: BottomNavigationBar(items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 0 ? Image.asset(selCalc, height: 20, width: 20,) : Image.asset(calc, height: 20, width: 20,),
+              title: Text(""),
             ),
 
-            //CardView 식단
-            SizedBox(
-              height: 25,
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 1 ? Image.asset(selSale, height: 20, width: 20,) : Image.asset(sale, height: 20, width: 20,),
+              title: Text(""),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "고생하셨습니다",
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontFamily: 'NotoSans-Regular',
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  Text(
-                    "허채림 병장(진)님",
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontFamily: 'NotoSans-Bold',
-                      fontSize: 22.0,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-            buildTodayMeals(),
-            MenuWidget(),
-            SizedBox(
-              height: 25,
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 2 ? Image.asset(selFood, height: 20, width: 20,) : Image.asset(food, height: 20, width: 20,),
+              title: Text(""),
             ),
 
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "전역일 계산",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'NotoSans-Bold',
-                          fontSize: 30.0,
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 15,
-                        height: 30,
-                        onPressed: () {},
-                        color: settingColor,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Text(
-                          '휴가관리',
-                          style: TextStyle(
-                            letterSpacing: 3,
-                            color: Colors.white,
-                            fontFamily: 'NotoSans-Bold',
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                ExitWidget(),
-              ],
-            ),
-
-            SizedBox(
-              height: 25,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 16, right: 16),
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 190,
-                    child: Swiper(
-                      onIndexChanged: (index) {
-                        setState(() {
-                          _currentedIndex = index;
-                        });
-                      },
-                      autoplay: true,
-                      layout: SwiperLayout.DEFAULT,
-                      itemCount: swiperEvent.length,
-                      itemBuilder: (BuildContext context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                swiperEvent[index].image,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: map<Widget>(swiperEvent, (index, image) {
-                          return Container(
-                            alignment: Alignment.centerLeft,
-                            height: 6,
-                            width: 6,
-                            margin: EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentedIndex == index
-                                  ? Colors.blueAccent
-                                  : Colors.grey[300],
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 3 ? Image.asset(selSetting, height: 20, width: 20,) : Image.asset(setting, height: 20, width: 20,),
+              title: Text(""),
             ),
           ],
+            showSelectedLabels: false,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: true,
+            elevation: 0,),
         ),
       ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _screens,
+      )
     );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   Padding buildTodayMeals() {

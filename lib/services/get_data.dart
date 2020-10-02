@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'dart:core';
 import 'package:flutter/foundation.dart';
 import 'package:hsspapp/models/food.dart';
+import 'package:hsspapp/models/px.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/services/api_response.dart';
 import 'package:http/http.dart' as http;
-
-
+import 'dart:async';
 import '../providers/app_config.dart';
 
 class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
+  String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwiaWF0IjoxNjAxNjE5ODU2LCJleHAiOjE2MDIyMjQ2NTZ9.1ayaCC62z6D-tPBqhqwnWJkwsescxWGctD1UbjBrfSU";
+
   String _message;
   String get message => _message;
 
@@ -33,14 +36,25 @@ class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
   }
 
   Future<APIResponse<Food>> getFood(){
-    return http.get('${appConfig.dataUrl}/food', headers: {'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwiaWF0IjoxNjAxNjE5ODU2LCJleHAiOjE2MDIyMjQ2NTZ9.1ayaCC62z6D-tPBqhqwnWJkwsescxWGctD1UbjBrfSU'}).then((data){
+    return http.get('${appConfig.dataUrl}/food', headers: {'Authorization': token}).then((data){
       if(data.statusCode == 200){
         final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
-        print(jsonData);
         final Food food = Food.fromJson(jsonData);
         return APIResponse<Food>(data: food);
       }
       return APIResponse<Food>(error: true, errorMessage: "error");
     }).catchError((e) => APIResponse<Food>(error: true, errorMessage: e.toString()));
   }
+
+  Future<List<PX>> getPX() async{
+    final response = await http.get('${appConfig.dataUrl}/px', headers: {'Authorization': token});
+    return parser(response.body);
+    //return compute(parser, response.body);
+  }
+
+  List<PX> parser(String responseBody){
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<PX>((json) => PX.fromJson(json)).toList();
+  }
+
 }

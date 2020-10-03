@@ -4,18 +4,18 @@ class Food {
   Food({this.meals});
 
   factory Food.fromJson(List<dynamic> parsedJson) {
-    List<Meal> photos = new List<Meal>();
-    photos = parsedJson.map((i) => Meal.fromJson(i)).toList();
+    List<Meal> meals = new List<Meal>();
+    meals = parsedJson.map((i) => Meal.fromJson(i)).toList();
 
     return Food(
-        meals: photos
+        meals: meals
     );
   }
 }
 
 class Meal {
-  String type;
-  List<Menu> menu;
+  final String type;
+  final List<Menu> menu;
 
   Meal({this.type, this.menu});
 
@@ -31,10 +31,10 @@ class Meal {
 }
 
 class Menu {
-  String name;
-  num kcal;
-  num protein;
-  num carbohydrate;
+  final String name;
+  final num kcal;
+  final num protein;
+  final num carbohydrate;
 
   Menu({this.name, this.kcal, this.protein, this.carbohydrate});
 

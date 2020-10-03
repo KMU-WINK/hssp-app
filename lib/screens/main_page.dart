@@ -14,7 +14,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  static int _selectedIndex = 2;
+  static int _selectedIndex = 0;
 
   static List<Widget> _screens = <Widget>[
     CalcPage(),

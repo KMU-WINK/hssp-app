@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/foundation.dart';
+import 'package:hsspapp/models/discount.dart';
 import 'package:hsspapp/models/food.dart';
 import 'package:hsspapp/models/px.dart';
 import 'package:hsspapp/providers/auth.dart';
@@ -53,6 +54,19 @@ class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
         return APIResponse<List<PX>>(data: jsonData.map<PX>((json) => PX.fromJson(json)).toList());
       }
       return APIResponse<List<PX>>(error: true, errorMessage: "error");
-    }).catchError((e) => APIResponse<Food>(error: true, errorMessage: e.toString()));
+    }).catchError((e) => APIResponse<List<PX>>(error: true, errorMessage: e.toString()));
+  }
+
+  Future<APIResponse<Discount>> getDiscount(){
+    return http.get('${appConfig.dataUrl}/discount', headers: {'Authorization': token}).then((data){
+      if(data.statusCode == 200){
+        final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
+        print(jsonData);
+        final Discount discount = Discount.fromJson(jsonData);
+        print(discount.statusBenefit.length);
+        return APIResponse<Discount>(data: discount);
+      }
+      return APIResponse<Discount>(error: true, errorMessage: "error");
+    }).catchError((e) => APIResponse<Discount>(error: true, errorMessage: e.toString()));
   }
 }

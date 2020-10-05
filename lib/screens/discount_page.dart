@@ -14,7 +14,7 @@ class _DiscountPageState extends State<DiscountPage> {
     return Scaffold(
       body: Container(
         child: FutureBuilder(
-          future: Provider.of<GetDataProvider>(context, listen: false).getPX(),
+          future: Provider.of<GetDataProvider>(context, listen: false).getDiscount(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
@@ -24,7 +24,7 @@ class _DiscountPageState extends State<DiscountPage> {
                 );
               default:
                 return ListView.builder(
-                  itemCount: snapshot.data.data.length + 1,
+                  itemCount: snapshot.data.data.cardBenefit.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     return index == 0
                         ? Padding(
@@ -71,12 +71,12 @@ class _DiscountPageState extends State<DiscountPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                  width: 100,
-                  height: 100,
-                  child: Image.network(product[index].thumbnail),
-
-                ),
+//                Container(
+//                  width: 100,
+//                  height: 100,
+//                  child: Image.network(product[index].thumbnail),
+//
+//                ),
                 Flexible(
                   child: Text(
                     product[index].name,

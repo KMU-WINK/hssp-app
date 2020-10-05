@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/foundation.dart';
+import 'package:hsspapp/models/discount.dart';
 import 'package:hsspapp/models/food.dart';
 import 'package:hsspapp/models/px.dart';
 import 'package:hsspapp/providers/auth.dart';
@@ -46,15 +47,26 @@ class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
     }).catchError((e) => APIResponse<Food>(error: true, errorMessage: e.toString()));
   }
 
-  Future<List<PX>> getPX() async{
-    final response = await http.get('${appConfig.dataUrl}/px', headers: {'Authorization': token});
-    return parser(response.body);
-    //return compute(parser, response.body);
+  Future<APIResponse<List<PX>>> getPX(){
+    return http.get('${appConfig.dataUrl}/px', headers: {'Authorization': token}).then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body).cast<Map<String, dynamic>>();
+        return APIResponse<List<PX>>(data: jsonData.map<PX>((json) => PX.fromJson(json)).toList());
+      }
+      return APIResponse<List<PX>>(error: true, errorMessage: "error");
+    }).catchError((e) => APIResponse<List<PX>>(error: true, errorMessage: e.toString()));
   }
 
-  List<PX> parser(String responseBody){
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<PX>((json) => PX.fromJson(json)).toList();
+  Future<APIResponse<Discount>> getDiscount(){
+    return http.get('${appConfig.dataUrl}/discount', headers: {'Authorization': token}).then((data){
+      if(data.statusCode == 200){
+        final jsonData = jsonDecode(utf8.decode(data.bodyBytes));
+        print(jsonData);
+        final Discount discount = Discount.fromJson(jsonData);
+        print(discount.statusBenefit.length);
+        return APIResponse<Discount>(data: discount);
+      }
+      return APIResponse<Discount>(error: true, errorMessage: "error");
+    }).catchError((e) => APIResponse<Discount>(error: true, errorMessage: e.toString()));
   }
-
 }

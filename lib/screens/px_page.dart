@@ -13,7 +13,7 @@ class _PxPageState extends State<PxPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: FutureBuilder<List<PX>>(
+        child: FutureBuilder(
           future: Provider.of<GetDataProvider>(context, listen: false).getPX(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
@@ -24,7 +24,7 @@ class _PxPageState extends State<PxPage> {
                 );
               default:
                 return ListView.builder(
-                  itemCount: snapshot.data.length + 1,
+                  itemCount: snapshot.data.data.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     return index == 0
                         ? Padding(
@@ -37,7 +37,7 @@ class _PxPageState extends State<PxPage> {
                               ),
                             ),
                           )
-                        : _listItem(snapshot.data, index - 1);
+                        : _listItem(snapshot.data.data, index - 1);
                   },
                 );
             }
@@ -51,7 +51,7 @@ class _PxPageState extends State<PxPage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       height: 150,
-      width: 344,
+      width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),

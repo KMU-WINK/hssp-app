@@ -1,19 +1,21 @@
+import 'dart:convert';
+
 class Discount {
   final List<CardBenefit> cardBenefit;
   final List<StatusBenefit> statusBenefit;
 
   Discount({this.cardBenefit, this.statusBenefit});
 
-  factory Discount.fromJson(List<dynamic> parsedJson) {
-    List<CardBenefit> cardBenefit = new List<CardBenefit>();
-    cardBenefit = parsedJson.map((i) => CardBenefit.fromJson(i)).toList();
+  factory Discount.fromJson(Map<String, dynamic> parsedJson) {
+    var cardList = parsedJson['cardBenefit'] as List;
+    List<CardBenefit> cardBenefitList = cardList.map((i) => CardBenefit.fromJson(i)).toList();
 
-    List<StatusBenefit> statusBenefit = new List<StatusBenefit>();
-    statusBenefit = parsedJson.map((i) => StatusBenefit.fromJson(i)).toList();
+    var statusList = parsedJson['cardBenefit'] as List;
+    List<StatusBenefit> statusBenefitList = statusList.map((i) => StatusBenefit.fromJson(i)).toList();
 
     return Discount(
-        cardBenefit: cardBenefit,
-        statusBenefit: statusBenefit
+        cardBenefit: cardBenefitList,
+        statusBenefit: statusBenefitList
     );
   }
 }

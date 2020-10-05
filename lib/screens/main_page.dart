@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hsspapp/providers/auth.dart';
 import 'package:hsspapp/screens/auth_page.dart';
 import 'package:hsspapp/screens/calc_page.dart';
+import 'package:hsspapp/screens/discount_page.dart';
 import 'package:hsspapp/screens/px_page.dart';
 import 'package:hsspapp/shared/color_constants.dart';
 import 'package:hsspapp/shared/image_constants.dart';
@@ -18,7 +19,7 @@ class _MainPageState extends State<MainPage> {
 
   static List<Widget> _screens = <Widget>[
     CalcPage(),
-    Container(color: Colors.red),
+    DiscountPage(),
     PxPage(),
     Container(color: Colors.blue),
   ];

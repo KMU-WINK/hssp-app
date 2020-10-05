@@ -46,15 +46,13 @@ class GetDataProvider with ChangeNotifier { //AppConfig, AuthProvider에 의존
     }).catchError((e) => APIResponse<Food>(error: true, errorMessage: e.toString()));
   }
 
-  Future<List<PX>> getPX() async{
-    final response = await http.get('${appConfig.dataUrl}/px', headers: {'Authorization': token});
-    return parser(response.body);
-    //return compute(parser, response.body);
+  Future<APIResponse<List<PX>>> getPX(){
+    return http.get('${appConfig.dataUrl}/px', headers: {'Authorization': token}).then((data){
+      if(data.statusCode == 200){
+        final jsonData = json.decode(data.body).cast<Map<String, dynamic>>();
+        return APIResponse<List<PX>>(data: jsonData.map<PX>((json) => PX.fromJson(json)).toList());
+      }
+      return APIResponse<List<PX>>(error: true, errorMessage: "error");
+    }).catchError((e) => APIResponse<Food>(error: true, errorMessage: e.toString()));
   }
-
-  List<PX> parser(String responseBody){
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<PX>((json) => PX.fromJson(json)).toList();
-  }
-
 }
